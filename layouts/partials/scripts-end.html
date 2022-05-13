@@ -62,3 +62,16 @@
   });
 </script>
 {{ end }}
+<script>
+  function applyDarkAds() {
+    document.getElementById('ethicalad').classList.add('dark');
+  }
+  if (
+    (fujiThemeData === 'auto' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches) ||
+    fujiThemeData === 'auto'
+  ) {
+    applyDarkAds();
+  }
+</script>
