@@ -54,6 +54,29 @@ function updateUtterancesTheme(utterancesFrame) {
   }
 }
 
+function applyDarkAds() {
+  document.getElementById('ethicalad').classList.add('dark');
+}
+
+function applyLightAds() {
+  document.getElementById('ethicalad').classList.remove('dark');
+}
+
+function applyThemeForAds() {
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  if (
+    (fujiThemeData === 'auto' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches) ||
+    fujiThemeData === 'dark'
+  ) {
+    applyDarkAds();
+  }
+  else {
+    applyLightAds();
+  }
+}
+
 // theme switch button
 document.querySelector('.btn .btn-toggle-mode').addEventListener('click', () => {
   let nowTheme = getNowTheme();
@@ -64,17 +87,22 @@ document.querySelector('.btn .btn-toggle-mode').addEventListener('click', () => 
     // if now in auto mode, switch to user mode
     document.body.setAttribute('data-theme', nowTheme === 'light' ? 'dark' : 'light');
     localStorage.setItem('fuji_data-theme', nowTheme === 'light' ? 'dark' : 'light');
+    applyThemeForAds();
   } else if (domTheme === 'light') {
     // if now in user mode and light mode
     document.body.setAttribute('data-theme', 'dark');
+    applyDarkAds();
     // if the theme want to switch is system theme
     localStorage.setItem('fuji_data-theme', systemTheme === 'dark' ? 'auto' : 'dark');
   } else {
     // if now in user mode and dark mode
     document.body.setAttribute('data-theme', 'light');
+    applyLightAds();
     // if the theme want to switch is system theme
     localStorage.setItem('fuji_data-theme', systemTheme === 'light' ? 'auto' : 'light');
   }
+
+  applyThemeForAds();
 
   // switch comment area theme
   // if this page has comment area
@@ -123,6 +151,9 @@ function searchAll(key, index, counter) {
     return 'notFound';
   }
 }
+
+
+applyThemeForAds();
 
 let urlParams = new URLSearchParams(window.location.search); // get params from URL
 if (urlParams.has('s')) {

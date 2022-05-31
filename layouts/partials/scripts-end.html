@@ -62,17 +62,3 @@
   });
 </script>
 {{ end }}
-<script>
-  function applyDarkAds() {
-    document.getElementById('ethicalad').classList.add('dark');
-  }
-  var fujiThemeData = localStorage.getItem('fuji_data-theme');
-  if (
-    (fujiThemeData === 'auto' &&
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches) ||
-    fujiThemeData === 'dark'
-  ) {
-    applyDarkAds();
-  }
-</script>
